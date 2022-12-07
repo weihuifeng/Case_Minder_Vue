@@ -26,8 +26,9 @@ define(function(require, exports, module) {
       var PRIORITY_COLORS = [
         ['#F85633', '#F85633'], // 0 - red
         ['#3e7bbf', '#3e7bbf'], // 1 - blue
-        ['#2DBAAD', '#2DBAAD'], // 2 - green
+        ['#2DBAAD', '#2DBAAD'], // 2 - greendeep
         ['#DD832C', '#DD832C'], // 3 - orange
+        ['#86BF3E', '#86BF3E'], // 4 - green
       ]; // hue from 1 to 5
 
         // jscs:disable maximumLineLength

@@ -122,15 +122,17 @@ define(function (require, exports, module) {
       if (e.button == MOUSE_RB) {
         e.preventDefault();
       }
+      //退出hotbox状态
       if (fsm.state() == 'hotbox') {
         hotbox.active(Hotbox.STATE_IDLE);
         fsm.jump('normal', 'blur');
-      } else if (fsm.state() == 'normal' && e.button == MOUSE_RB) {
+      } else if (fsm.state() == 'normal' && e.button == MOUSE_RB) { 
         downX = e.clientX;
         downY = e.clientY;
       }
     }, false);
 
+    //退出hotbox状态
     container.addEventListener('mousewheel', function (e) {
       if (fsm.state() == 'hotbox') {
         hotbox.active(Hotbox.STATE_IDLE);
@@ -141,7 +143,7 @@ define(function (require, exports, module) {
     container.addEventListener('contextmenu', function (e) {
       e.preventDefault();
     });
-
+      //进入hotbox状态
     container.addEventListener('mouseup', function (e) {
       if (fsm.state() != 'normal') {
         return;

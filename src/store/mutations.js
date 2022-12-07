@@ -12,6 +12,12 @@ export const mutations = {
     state.editor = data
   },
 
+  // setSourceData(state, data){
+  //   state.sourceData.push({
+  //     name: data,
+  //   })
+  // },
+  
   changeSave(state, bool) {
     state.working.saving = bool;
   },
@@ -31,6 +37,8 @@ export const mutations = {
   registerEvent(state, callback) {
     state.callbackQueue.push(callback);
   },
+
+
 
   setConfig(state) {
     var supported = Object.keys(state.config);

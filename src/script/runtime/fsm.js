@@ -49,6 +49,7 @@ define(function (require, exports, module) {
 
       currentState = newState;
       debug.log('[{0}] {1} -> {2}', reason, oldState, newState);
+      // console.log('[{reason}] {oldState} -> {newState}', reason, oldState, newState);
 
       // 跳转后
       for (i = 0; i < handlers.length; i++) {

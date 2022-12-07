@@ -73,3 +73,10 @@ export default {
   created() {}
 }
 </script>
+
+<style scoped>
+/* 修复位置不居中 */
+.progress-group{
+  padding-left: 10px;
+}
+</style>

@@ -1,34 +1,35 @@
 <template lang="html">
-<div class="navigator">
-  <div class="nav-bar">
-    <div class="nav-btn zoom-in" @click="zoomIn" title="放大" :class="{ 'active' : zoomRadioIn }">
-      <div class="icon"></div>
+  <div class="navigator">
+    <div class="nav-bar">
+      <div class="nav-btn zoom-in" @click="zoomIn" title="放大" :class="{ 'active' : zoomRadioIn }">
+        <div class="icon"></div>
+      </div>
+      <div class="zoom-pan">
+        <div class="origin" :style="{ 'transform': 'translate(0, ' + getHeight(100) + 'px)' }" @click="RestoreSize">
+        </div>
+        <div class="indicator" :style="{
+          'transform': 'translate(0, ' + getHeight(this.zoom) + 'px)',
+          'transition': 'transform 200ms'
+        }"></div>
+      </div>
+      <div class="nav-btn zoom-out" @click="zoomOut" title="缩小" :class="{ 'active': zoomRadioOut }">
+        <div class="icon"></div>
+      </div>
+      <div class="nav-btn hand" @click="hand" title="拖拽" :class="{ 'active': enableHand }">
+        <div class="icon"></div>
+      </div>
+      <div class="nav-btn camera" @click="locateToOrigin" title="定位根节点">
+        <div class="icon"></div>
+      </div>
+      <div class="nav-btn nav-trigger" :class="{ 'active': isNavOpen }" @click="toggleNavOpen" title="导航器">
+        <div class="icon"></div>
+      </div>
+      <div class="nav-btn" title="全屏/恢复" @click="fullScreenToggle">
+        <i class="el-icon-full-screen" style="font-size: 25px;" />
+      </div>
     </div>
-    <div class="zoom-pan">
-      <div class="origin" :style="{'transform': 'translate(0, ' + getHeight(100) + 'px)'}" @click="RestoreSize"></div>
-      <div class="indicator" :style="{
-                 'transform': 'translate(0, ' + getHeight(this.zoom) + 'px)',
-                 'transition': 'transform 200ms'
-                 }"></div>
-    </div>
-    <div class="nav-btn zoom-out" @click="zoomOut" title="缩小" :class="{ 'active' : zoomRadioOut }">
-      <div class="icon"></div>
-    </div>
-    <div class="nav-btn hand" @click="hand" title="拖拽" :class="{ 'active' : enableHand }">
-      <div class="icon"></div>
-    </div>
-    <div class="nav-btn camera" @click="locateToOrigin" title="定位根节点">
-      <div class="icon"></div>
-    </div>
-    <div class="nav-btn nav-trigger" :class="{'active' : isNavOpen}" @click="toggleNavOpen" title="导航器">
-      <div class="icon"></div>
-    </div>
-    <div class="nav-btn" title="全屏/恢复" @click="fullScreenToggle">
-    <i class="el-icon-full-screen" style="font-size: 25px;" />
-    </div>
+    <div class="nav-previewer" v-show="isNavOpen"></div>
   </div>
-  <div class="nav-previewer" v-show="isNavOpen"></div>
-</div>
 </template>
 
 <script>
@@ -76,13 +77,13 @@ export default {
     // ...mapActions(["setMemory", "getMemory"]),
 
     fullScreenToggle() {
-      if(screenfull.isEnabled){
-        if(screenfull.isFullscreen){
+      if (screenfull.isEnabled) {
+        if (screenfull.isFullscreen) {
           screenfull.exit();
-        }else {
+        } else {
           screenfull.toggle();
         }
-      }else {
+      } else {
         this.$message.error('您的浏览器不支持全屏操作！');
       }
     },
@@ -201,9 +202,9 @@ export default {
       self.minder.getRoot().traverse(function (node) {
         var box = node.getLayoutBox();
         self.pathHandler(nodePathData, box.x, box.y, box.width, box.height);
-   /*     nodePathData.push('M', box.x, box.y,
-          'h', box.width, 'v', box.height,
-          'h', -box.width, 'z');*/
+        /*     nodePathData.push('M', box.x, box.y,
+               'h', box.width, 'v', box.height,
+               'h', -box.width, 'z');*/
         if (node.getConnection() && node.parent && node.parent.isExpanded()) {
           connectionThumbData.push(node.getConnection().getPathData());
         }
@@ -235,7 +236,6 @@ export default {
   mounted() {
     var self = this;
     var minder = self.minder;
-    console.log("这里什么时候执行到啊。。。。。。")
 
     // 以下部分是缩略图导航器
     self.$previewNavigator = $(".nav-previewer");
@@ -302,7 +302,14 @@ export default {
         dragging = false;
         self.$previewNavigator && self.$previewNavigator.removeClass("grab");
       });
-    }
+    };
   },
 };
 </script>
+
+<style lang="scss">
+// .darkmode-toggle {
+//   z-index: 99;
+//   left: 95% !important;
+// }
+</style>

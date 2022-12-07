@@ -6,9 +6,11 @@
  * @author: techird
  * @copyright: Baidu FEX, 2014
  */
+
 define(function (require, exports, module) {
 
   require('../tool/innertext');
+
 
   var Debug = require('../tool/debug');
   var debug = new Debug('input');
@@ -95,12 +97,33 @@ define(function (require, exports, module) {
       hotbox.state('main').button({
         position: 'center',
         label: '编辑',
-        key: 'F2',
+        // key: 'F2',
+        key: 'Space',
         enable: function () {
           return minder.queryCommandState('text') != -1;
         },
-        action: editText
+        action: showDialog
       });
+    }
+
+    /**
+     * 弹出用例表单对话框
+     */
+    function showDialog(){
+      var node = minder.getSelectedNode();
+      if (!node) {
+        return;
+      }
+      //判断是否是最后一个节点
+      // console.log("子节点",minder.getSelectedNode().children)
+      if(minder.getSelectedNode().children.length != 0){
+        return;
+      }
+
+      // 状态机进入dialogShowed状态，不允许唤出hotbox，详情查看jumping进入hotbox逻辑
+      fsm.jump("normal",'blur')
+      fsm.jump('dialogShowed','dialogshowed')
+      showCaseDialog(fsm);
     }
 
 

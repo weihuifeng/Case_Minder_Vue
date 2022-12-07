@@ -5,6 +5,9 @@ import store from './store'
 import 'element-ui/lib/theme-chalk/index.css'
 import ElementUI from 'element-ui'
 import $ from 'jquery'
+// 引入拖拽组件
+import './script/tool/mouseDrag.js'
+// import dialogDrag from '@script/tool/mouseDrag'
 
 require('../node_modules/codemirror/lib/codemirror.js')
 require('../node_modules/codemirror/mode/xml/xml.js')

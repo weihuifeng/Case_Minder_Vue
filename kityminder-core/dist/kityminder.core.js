@@ -1,9 +1,9 @@
 /*!
  * ====================================================
- * Kity Minder Core - v1.4.50 - 2021-01-14
+ * Kity Minder Core - v1.4.50 - 2022-11-08
  * https://github.com/fex-team/kityminder-core
  * GitHub: https://github.com/fex-team/kityminder-core.git 
- * Copyright (c) 2021 Baidu FEX; Licensed BSD-3-Clause
+ * Copyright (c) 2022 Baidu FEX; Licensed BSD-3-Clause
  * ====================================================
  */
 
@@ -2522,7 +2522,7 @@ _p[23] = {
                 if (typeof target == "string") {
                     target = document.querySelector(target);
                 }
-                console.log("======target=======", target);
+                //   console.log("======target=======",target)
                 if (target) {
                     if (target.tagName.toLowerCase() == "script") {
                         var newTarget = document.createElement("div");
@@ -6417,8 +6417,9 @@ _p[56] = {
             // ]; // hue from 1 to 5
             var PRIORITY_COLORS = [ [ "#F85633", "#F85633" ], // 0 - red
             [ "#3e7bbf", "#3e7bbf" ], // 1 - blue
-            [ "#2DBAAD", "#2DBAAD" ], // 2 - green
-            [ "#DD832C", "#DD832C" ] ];
+            [ "#2DBAAD", "#2DBAAD" ], // 2 - greendeep
+            [ "#DD832C", "#DD832C" ], // 3 - orange
+            [ "#86BF3E", "#86BF3E" ] ];
             // hue from 1 to 5
             // jscs:disable maximumLineLength
             var BACK_PATH = "M0,13c0,3.866,3.134,7,7,7h6c3.866,0,7-3.134,7-7V7H0V13z";

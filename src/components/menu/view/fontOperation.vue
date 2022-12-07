@@ -206,3 +206,18 @@ export default {
     },
 };
 </script>
+
+<style scoped>
+/* 修复位置居中 */
+.font-group{
+  padding-left: 10px;
+}
+
+/* 修复箭头漂移 */
+.font-group ::v-deep .el-input__icon{
+    line-height: 33px;
+}
+.font-group ::v-deep .el-input .el-select__caret{
+  height: 32px;
+}
+</style>

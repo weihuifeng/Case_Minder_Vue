@@ -2,6 +2,7 @@ export const state = {
   count: 2,
   minder: {},
   editor: {},
+  // sourceData: [],
   working: {
     editing: false,
     saving: false,

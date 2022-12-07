@@ -27,3 +27,7 @@ export const getMinder = state => {
 export const getEditor = state => {
   return state.editor
 }
+
+// export const getSourceData = state => {
+//   return state.sourceData
+// }

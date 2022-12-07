@@ -28,7 +28,7 @@ define(function (require, exports, module) {
       });
     });*/
     var priority = hotbox.state('priority');
-    '0123'.replace(/./g, function (p) {
+    '01234'.replace(/./g, function (p) {
       priority.button({
         position: 'ring',
         label: 'P' + p,

@@ -1,25 +1,27 @@
 <template lang="html">
-<div class="menu-container">
-<!--  撤销回退、重做-->
-  <back-and-right></back-and-right>
+  <div class="menu-container">
+    <!--  撤销回退、重做-->
+    <back-and-right></back-and-right>
 
-  <expand></expand>
-  <selection></selection>
-  <insert-box></insert-box>
-  <move-box></move-box>
-  <edit-del></edit-del>
-  <!--    超链接-->
-  <hyberlink></hyberlink>
-<!--  查询、过滤-->
-  <search></search>
-  <node-box></node-box>
-  <sequence-box></sequence-box>
-  <progress-box></progress-box>
-<!--  自定义标签-->
-  <resource-edit></resource-edit>
+    <expand></expand>
+    <selection></selection>
+    <insert-box></insert-box>
+    <move-box></move-box>
+    <edit-del></edit-del>
+    <!--    超链接-->
+    <hyberlink></hyberlink>
+    <!--  查询、过滤-->
+    <search></search>
+    <node-box></node-box>
+    <sequence-box></sequence-box>
+    <progress-box></progress-box>
+    <!--  自定义标签-->
+    <resource-edit></resource-edit>
 
+    <!-- <case-tag></case-tag> -->
+    <case-dialog></case-dialog>
 
-</div>
+  </div>
 </template>
 
 <script>
@@ -35,6 +37,8 @@ import resourceEdit from "./resourceEdit";
 import Search from "./search/search";
 import hyberlink from "./hyberlink";
 import backAndRight from "./backAndRight";
+// import caseTag from '@/components/menu/edit/caseTag'
+import caseDialog from '@/components/menu/edit/caseDialog'
 
 
 export default {
@@ -51,7 +55,9 @@ export default {
     selection,
     resourceEdit,
     hyberlink,
-    backAndRight
+    backAndRight,
+    // caseTag,
+    caseDialog
   }
 }
 </script>

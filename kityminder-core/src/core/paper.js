@@ -44,7 +44,7 @@ define(function(require, exports, module) {
             if (typeof(target) == 'string') {
                 target = document.querySelector(target);
             }
-          console.log("======target=======",target)
+        //   console.log("======target=======",target)
 
           if (target) {
                 if (target.tagName.toLowerCase() == 'script') {

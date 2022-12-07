@@ -1,8 +1,12 @@
-<template lang="html">
- <div class=""></div>
+<template>
+
 </template>
 <script>
 export default {
-  name: 'footerVue'
+  name: 'footerVue',
 }
 </script>
+
+<style lang="scss">
+
+</style>

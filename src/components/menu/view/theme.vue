@@ -1,5 +1,6 @@
 <template>
-  <div class="selection-group" :disabled="disabled">
+  <!-- 存在bug，先不展示  221012 -->
+  <div class="selection-group" :disabled="disabled" v-if="showTheme">
     <el-dropdown trigger="click" :hide-on-click="true" @command="handleCommand">
       <span>
         主题设置
@@ -27,6 +28,7 @@
     name: 'Mold',
     data() {
       return {
+        showTheme: false,
         mold_index: 1,
         themeList: [],
         nameList: {
@@ -76,9 +78,9 @@
       }
     },
     created() {
-      console.log("them.vue 我被执行了么？？")
+      // console.log("them.vue 我被执行了么？？")
       let list = kityminder.Minder.getThemeList()
-      console.log('---list---',list)
+      // console.log('---list---',list)
 
       for (var k in list) {
         let style = list[k]
