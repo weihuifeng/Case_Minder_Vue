@@ -1,9 +1,9 @@
 /*!
  * ====================================================
- * Kity Minder Core - v1.4.50 - 2022-11-08
+ * Kity Minder Core - v1.4.50 - 2023-03-28
  * https://github.com/fex-team/kityminder-core
  * GitHub: https://github.com/fex-team/kityminder-core.git 
- * Copyright (c) 2022 Baidu FEX; Licensed BSD-3-Clause
+ * Copyright (c) 2023 Baidu FEX; Licensed BSD-3-Clause
  * ====================================================
  */
 
@@ -3811,9 +3811,9 @@ _p[35] = {
         _p.r(46);
         _p.r(47);
         _p.r(48);
-        _p.r(50);
         _p.r(49);
         _p.r(51);
+        _p.r(50);
         _p.r(52);
         _p.r(53);
         _p.r(54);
@@ -3827,23 +3827,24 @@ _p[35] = {
         _p.r(62);
         _p.r(63);
         _p.r(64);
-        _p.r(68);
         _p.r(65);
-        _p.r(67);
+        _p.r(69);
         _p.r(66);
+        _p.r(68);
+        _p.r(67);
         _p.r(40);
         _p.r(36);
         _p.r(37);
         _p.r(38);
         _p.r(39);
         _p.r(41);
-        _p.r(75);
+        _p.r(76);
+        _p.r(79);
         _p.r(78);
         _p.r(77);
-        _p.r(76);
-        _p.r(78);
-        _p.r(80);
         _p.r(79);
+        _p.r(81);
+        _p.r(80);
         _p.r(0);
         _p.r(1);
         _p.r(2);
@@ -3851,12 +3852,12 @@ _p[35] = {
         _p.r(4);
         _p.r(5);
         _p.r(6);
-        _p.r(69);
-        _p.r(73);
         _p.r(70);
-        _p.r(72);
-        _p.r(71);
         _p.r(74);
+        _p.r(71);
+        _p.r(73);
+        _p.r(72);
+        _p.r(75);
         module.exports = kityminder;
     }
 };
@@ -4448,7 +4449,7 @@ _p[43] = {
         var MinderNode = _p.r(21);
         var Command = _p.r(9);
         var Module = _p.r(20);
-        var TextRenderer = _p.r(61);
+        var TextRenderer = _p.r(62);
         Module.register("basestylemodule", function() {
             var km = this;
             function getNodeDataOrStyle(node, name) {
@@ -4554,8 +4555,108 @@ _p[43] = {
     }
 };
 
-//src/module/clipboard.js
+//src/module/case.js
+/**
+ * @fileOverview
+ *
+ * 用例信息保存
+ *
+ * @author: weihuifeng
+ * @copyright: SR, 2023
+ */
 _p[44] = {
+    value: function(require, exports, module) {
+        var kity = _p.r(17);
+        var utils = _p.r(33);
+        var Minder = _p.r(19);
+        var MinderNode = _p.r(21);
+        var Command = _p.r(9);
+        var Module = _p.r(20);
+        var Renderer = _p.r(27);
+        Module.register("CaseModule", function() {
+            /**
+         * @command Case
+         * @description 设置节点的用例信息
+         * @param {string} caseInfo 要设置的用例信息，json字符串，设置为 null 则移除用例信息
+         * @state
+         *    0: 当前有选中的节点
+         *   -1: 当前没有选中的节点
+         */
+            var CaseCommand = kity.createClass("CaseCommand", {
+                base: Command,
+                execute: function(minder, caseInfo) {
+                    var node = minder.getSelectedNode();
+                    node.setData("case", caseInfo);
+                },
+                queryState: function(minder) {
+                    return minder.getSelectedNodes().length === 1 ? 0 : -1;
+                },
+                queryValue: function(minder) {
+                    var node = minder.getSelectedNode();
+                    // console.log("get selected node:",node)
+                    // console.log("caseInfo:",node.getData('case'))
+                    return node && node.getData("case");
+                }
+            });
+            //暂时没有图标
+            // var NoteIcon = kity.createClass('NoteIcon', {
+            //     base: kity.Group,
+            //     constructor: function() {
+            //         this.callBase();
+            //         this.width = 16;
+            //         this.height = 17;
+            //         this.rect = new kity.Rect(16, 17, 0.5, -8.5, 2).fill('transparent');
+            //         this.path = new kity.Path().setPathData(NOTE_PATH).setTranslate(2.5, -6.5);
+            //         this.addShapes([this.rect, this.path]);
+            //         this.on('mouseover', function() {
+            //             this.rect.fill('rgba(255, 255, 200, .8)');
+            //         }).on('mouseout', function() {
+            //             this.rect.fill('transparent');
+            //         });
+            //         this.setStyle('cursor', 'pointer');
+            //     }
+            // });
+            // var NoteIconRenderer = kity.createClass('NoteIconRenderer', {
+            //     base: Renderer,
+            //     create: function(node) {
+            //         var icon = new NoteIcon();
+            //         icon.on('mousedown', function(e) {
+            //             e.preventDefault();
+            //             node.getMinder().fire('editnoterequest');
+            //         });
+            //         icon.on('mouseover', function() {
+            //             node.getMinder().fire('shownoterequest', {node: node, icon: icon});
+            //         });
+            //         icon.on('mouseout', function() {
+            //             node.getMinder().fire('hidenoterequest', {node: node, icon: icon});
+            //         });
+            //         return icon;
+            //     },
+            //     shouldRender: function(node) {
+            //         return node.getData('note');
+            //     },
+            //     update: function(icon, node, box) {
+            //         var x = box.right + node.getStyle('space-left');
+            //         var y = box.cy;
+            //         icon.path.fill(node.getStyle('color'));
+            //         icon.setTranslate(x, y);
+            //         return new kity.Box(x, Math.round(y - icon.height / 2), icon.width, icon.height);
+            //     }
+            // });
+            return {
+                // renderers: {
+                //     right: NoteIconRenderer
+                // },
+                commands: {
+                    case: CaseCommand
+                }
+            };
+        });
+    }
+};
+
+//src/module/clipboard.js
+_p[45] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var utils = _p.r(33);
@@ -4704,7 +4805,7 @@ _p[44] = {
 };
 
 //src/module/dragtree.js
-_p[45] = {
+_p[46] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var utils = _p.r(33);
@@ -5045,7 +5146,7 @@ _p[45] = {
 };
 
 //src/module/expand.js
-_p[46] = {
+_p[47] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var utils = _p.r(33);
@@ -5311,7 +5412,7 @@ _p[46] = {
 };
 
 //src/module/font.js
-_p[47] = {
+_p[48] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var utils = _p.r(33);
@@ -5319,7 +5420,7 @@ _p[47] = {
         var MinderNode = _p.r(21);
         var Command = _p.r(9);
         var Module = _p.r(20);
-        var TextRenderer = _p.r(61);
+        var TextRenderer = _p.r(62);
         function getNodeDataOrStyle(node, name) {
             return node.getData(name) || node.getStyle(name);
         }
@@ -5458,7 +5559,7 @@ _p[47] = {
 };
 
 //src/module/hyperlink.js
-_p[48] = {
+_p[49] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var utils = _p.r(33);
@@ -5570,7 +5671,7 @@ _p[48] = {
 };
 
 //src/module/image-viewer.js
-_p[49] = {
+_p[50] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var keymap = _p.r(15);
@@ -5675,7 +5776,7 @@ _p[49] = {
 };
 
 //src/module/image.js
-_p[50] = {
+_p[51] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var utils = _p.r(33);
@@ -5797,7 +5898,7 @@ _p[50] = {
 };
 
 //src/module/keynav.js
-_p[51] = {
+_p[52] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var utils = _p.r(33);
@@ -5952,7 +6053,7 @@ _p[51] = {
  * @author: techird
  * @copyright: Baidu FEX, 2014
  */
-_p[52] = {
+_p[53] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var Command = _p.r(9);
@@ -6027,7 +6128,7 @@ _p[52] = {
 };
 
 //src/module/node.js
-_p[53] = {
+_p[54] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var utils = _p.r(33);
@@ -6177,7 +6278,7 @@ _p[53] = {
  * @author: techird
  * @copyright: Baidu FEX, 2014
  */
-_p[54] = {
+_p[55] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var utils = _p.r(33);
@@ -6275,7 +6376,7 @@ _p[54] = {
 };
 
 //src/module/outline.js
-_p[55] = {
+_p[56] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var utils = _p.r(33);
@@ -6392,7 +6493,7 @@ _p[55] = {
 };
 
 //src/module/priority.js
-_p[56] = {
+_p[57] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var utils = _p.r(33);
@@ -6528,7 +6629,7 @@ _p[56] = {
 };
 
 //src/module/progress.js
-_p[57] = {
+_p[58] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var utils = _p.r(33);
@@ -6653,7 +6754,7 @@ _p[57] = {
 };
 
 //src/module/resource.js
-_p[58] = {
+_p[59] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var utils = _p.r(33);
@@ -6983,7 +7084,7 @@ _p[58] = {
 };
 
 //src/module/select.js
-_p[59] = {
+_p[60] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var utils = _p.r(33);
@@ -7128,7 +7229,7 @@ _p[59] = {
 };
 
 //src/module/style.js
-_p[60] = {
+_p[61] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var utils = _p.r(33);
@@ -7233,7 +7334,7 @@ _p[60] = {
 };
 
 //src/module/text.js
-_p[61] = {
+_p[62] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var utils = _p.r(33);
@@ -7487,7 +7588,7 @@ _p[61] = {
 };
 
 //src/module/view.js
-_p[62] = {
+_p[63] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var utils = _p.r(33);
@@ -7809,7 +7910,7 @@ _p[62] = {
 };
 
 //src/module/zoom.js
-_p[63] = {
+_p[64] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var utils = _p.r(33);
@@ -7988,7 +8089,7 @@ _p[63] = {
 };
 
 //src/protocol/json.js
-_p[64] = {
+_p[65] = {
     value: function(require, exports, module) {
         var data = _p.r(12);
         data.registerProtocol("json", module.exports = {
@@ -8007,7 +8108,7 @@ _p[64] = {
 };
 
 //src/protocol/markdown.js
-_p[65] = {
+_p[66] = {
     value: function(require, exports, module) {
         var data = _p.r(12);
         var LINE_ENDING_SPLITER = /\r\n|\r|\n/;
@@ -8138,7 +8239,7 @@ _p[65] = {
 };
 
 //src/protocol/png.js
-_p[66] = {
+_p[67] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var data = _p.r(12);
@@ -8358,7 +8459,7 @@ _p[66] = {
 };
 
 //src/protocol/svg.js
-_p[67] = {
+_p[68] = {
     value: function(require, exports, module) {
         var data = _p.r(12);
         /**
@@ -8630,7 +8731,7 @@ _p[67] = {
 };
 
 //src/protocol/text.js
-_p[68] = {
+_p[69] = {
     value: function(require, exports, module) {
         var data = _p.r(12);
         var Browser = _p.r(17).Browser;
@@ -8861,7 +8962,7 @@ _p[68] = {
  * @author: techird
  * @copyright: Baidu FEX, 2014
  */
-_p[69] = {
+_p[70] = {
     value: function(require, exports, module) {
         var template = _p.r(31);
         template.register("default", {
@@ -8895,7 +8996,7 @@ _p[69] = {
  * @author: techird
  * @copyright: Baidu FEX, 2014
  */
-_p[70] = {
+_p[71] = {
     value: function(require, exports, module) {
         var template = _p.r(31);
         template.register("filetree", {
@@ -8923,7 +9024,7 @@ _p[70] = {
  * @author: techird
  * @copyright: Baidu FEX, 2014
  */
-_p[71] = {
+_p[72] = {
     value: function(require, exports, module) {
         var template = _p.r(31);
         template.register("fish-bone", {
@@ -8965,7 +9066,7 @@ _p[71] = {
  * @author: techird
  * @copyright: Baidu FEX, 2014
  */
-_p[72] = {
+_p[73] = {
     value: function(require, exports, module) {
         var template = _p.r(31);
         template.register("right", {
@@ -8989,7 +9090,7 @@ _p[72] = {
  * @author: techird
  * @copyright: Baidu FEX, 2014
  */
-_p[73] = {
+_p[74] = {
     value: function(require, exports, module) {
         var template = _p.r(31);
         template.register("structure", {
@@ -9012,7 +9113,7 @@ _p[73] = {
  * @author: along
  * @copyright: bpd729@163.com, 2015
  */
-_p[74] = {
+_p[75] = {
     value: function(require, exports, module) {
         var template = _p.r(31);
         template.register("tianpan", {
@@ -9033,7 +9134,7 @@ _p[74] = {
 };
 
 //src/theme/default.js
-_p[75] = {
+_p[76] = {
     value: function(require, exports, module) {
         var theme = _p.r(32);
         [ "classic", "classic-compact" ].forEach(function(name) {
@@ -9092,7 +9193,7 @@ _p[75] = {
 };
 
 //src/theme/fish.js
-_p[76] = {
+_p[77] = {
     value: function(require, exports, module) {
         var theme = _p.r(32);
         theme.register("fish", {
@@ -9143,7 +9244,7 @@ _p[76] = {
 };
 
 //src/theme/fresh.js
-_p[77] = {
+_p[78] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var theme = _p.r(32);
@@ -9212,7 +9313,7 @@ _p[77] = {
 };
 
 //src/theme/snow.js
-_p[78] = {
+_p[79] = {
     value: function(require, exports, module) {
         var theme = _p.r(32);
         [ "snow", "snow-compact" ].forEach(function(name) {
@@ -9267,7 +9368,7 @@ _p[78] = {
 };
 
 //src/theme/tianpan.js
-_p[79] = {
+_p[80] = {
     value: function(require, exports, module) {
         var theme = _p.r(32);
         [ "tianpan", "tianpan-compact" ].forEach(function(name) {
@@ -9329,7 +9430,7 @@ _p[79] = {
 };
 
 //src/theme/wire.js
-_p[80] = {
+_p[81] = {
     value: function(require, exports, module) {
         var theme = _p.r(32);
         theme.register("wire", {

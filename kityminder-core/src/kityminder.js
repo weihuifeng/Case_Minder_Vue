@@ -45,6 +45,7 @@ define(function(require, exports, module) {
     // 模块依赖
     require('./module/arrange');
     require('./module/basestyle');
+    require('./module/case')
     require('./module/clipboard');
     require('./module/dragtree');
     require('./module/expand');

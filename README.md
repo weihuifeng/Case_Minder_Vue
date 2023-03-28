@@ -12,6 +12,9 @@
 # install npm dependencies
     npm install
 
+# if node > 16？
+    $env:NODE_OPTIONS = "--openssl-legacy-provider"
+
 # serve with hot reload at localhost:8088
     npm run dev
 

@@ -53,12 +53,12 @@ export default {
       return minder.queryCommandState && minder.queryCommandState('priority') === -1;
     },
   },
-  mounted() {
-    eventNotify.$on('syncMsg', data => {
-      // console.log('syncMsg', data)
-      this.execCommand(data)
-    })
-  },
+  // mounted() {
+  //   eventNotify.$on('syncMsg', data => {
+  //     // console.log('syncMsg', data)
+  //     this.execCommand(data)
+  //   })
+  // },
   methods: {
     execCommand(index) {
       this.commandDisabled || this.dealPriority(index);

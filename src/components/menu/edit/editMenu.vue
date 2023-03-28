@@ -21,6 +21,14 @@
     <!-- <case-tag></case-tag> -->
     <case-dialog></case-dialog>
 
+    <div>
+      <el-button
+      class="commitBtn"
+      type="primary"
+      :loading="isLoading"
+      >
+      保存<i class="el-icon-upload el-icon--right"></i></el-button>
+    </div>
   </div>
 </template>
 
@@ -37,7 +45,6 @@ import resourceEdit from "./resourceEdit";
 import Search from "./search/search";
 import hyberlink from "./hyberlink";
 import backAndRight from "./backAndRight";
-// import caseTag from '@/components/menu/edit/caseTag'
 import caseDialog from '@/components/menu/edit/caseDialog'
 
 
@@ -58,6 +65,20 @@ export default {
     backAndRight,
     // caseTag,
     caseDialog
-  }
+  },
+  data(){
+    return{
+      isLoading: false,
+    }
+  },
 }
 </script>
+
+<style scoped>
+.commitBtn{
+    /* font-size: larger; */
+    margin-left: 20px;
+    height: 40px;
+}
+
+</style>

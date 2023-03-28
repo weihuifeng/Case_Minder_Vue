@@ -8,8 +8,8 @@
  */
 define(function (require, exports, module) {
   var Minder = require('../minder');
-  console.log("----this -minder-----",this.minder)
-  console.log("----this.selector-----",this.selector)
+  // console.log("----this -minder-----",this.minder)
+  // console.log("----this.selector-----",this.selector)
 
 
   function MinderRuntime() {
