@@ -1,5 +1,7 @@
 <template lang="html">
   <div class="mind-editor">
+        <!-- <case-tag></case-tag> -->
+    <case-dialog></case-dialog>
   </div>
 
 </template>
@@ -10,8 +12,15 @@ import {
   mapMutations,
   mapGetters
 } from 'vuex'
+import caseDialog from '@/components/menu/edit/caseDialog'
 
 export default {
+
+  components: {
+    // caseTag,
+    caseDialog
+  },
+
   data() {
     return {
       previewTimer: null,

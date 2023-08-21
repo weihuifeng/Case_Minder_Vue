@@ -29,7 +29,9 @@ define(function(require, exports, module) {
             return {
                 selectStart: function(e) {
                     // 只接受左键
-                    if (e.originEvent.button || e.originEvent.altKey) return;
+                    // if (e.originEvent.button || e.originEvent.altKey) return;
+                    //wei: 改为右键触发, 23.08.18
+                    if (!e.originEvent.button == 2 || e.originEvent.altKey) return;
 
                     // 清理不正确状态
                     if (startPosition) {

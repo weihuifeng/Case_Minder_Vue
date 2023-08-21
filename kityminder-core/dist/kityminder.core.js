@@ -1,6 +1,6 @@
 /*!
  * ====================================================
- * Kity Minder Core - v1.4.50 - 2023-03-28
+ * Kity Minder Core - v1.4.50 - 2023-08-18
  * https://github.com/fex-team/kityminder-core
  * GitHub: https://github.com/fex-team/kityminder-core.git 
  * Copyright (c) 2023 Baidu FEX; Licensed BSD-3-Clause
@@ -7109,7 +7109,9 @@ _p[60] = {
                 return {
                     selectStart: function(e) {
                         // 只接受左键
-                        if (e.originEvent.button || e.originEvent.altKey) return;
+                        // if (e.originEvent.button || e.originEvent.altKey) return;
+                        //wei: 改为右键触发
+                        if (!e.originEvent.button == 2 || e.originEvent.altKey) return;
                         // 清理不正确状态
                         if (startPosition) {
                             return this.selectEnd();
@@ -7676,7 +7678,11 @@ _p[63] = {
                         e.originEvent.preventDefault();
                     }
                     // 点击未选中的根节点临时开启
-                    if (e.getTargetNode() == this.getRoot() || e.originEvent.button == 2 || e.originEvent.altKey) {
+                    // if (e.getTargetNode() == this.getRoot() || e.originEvent.button == 2 || e.originEvent.altKey) {
+                    // wei: 改为左键拖动面板, 如果选中了节点，触发dragTree,不移动面板
+                    if (e.getTargetNode() == this.getRoot() || e.originEvent.button == 0 || e.originEvent.altKey) {
+                        // window.console.log("now e is => ", e)
+                        if (e.minder._selectedNodes.length > 0) return;
                         lastPosition = e.getPosition("view");
                         isTempDrag = true;
                     }

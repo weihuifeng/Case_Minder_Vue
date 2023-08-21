@@ -66,9 +66,10 @@ export default {
     dealPriority(index) {
       // 判断是否是最后一个节点,且无条件可以删除用例等级
       // console.log("子节点", minder.getSelectedNode().children)
-      if (index < 5 && this.minder.getSelectedNode().children.length != 0) {
-        return;
-      }
+      // update：不管是不是用例节点，都可以定义优先级
+      // if (index < 5 && this.minder.getSelectedNode().children.length != 0) {
+      //   return;
+      // }
 
       index >= 5 ? this.minder.execCommand('priority', 0) : this.minder.execCommand('priority', index + 1)
 

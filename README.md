@@ -38,3 +38,8 @@ npm run build
 ![脑图](https://github.com/MeYoung/Case_Minder_Vue/blob/master/naotu1.png?raw=true)
 ![脑图](https://github.com/MeYoung/Case_Minder_Vue/blob/master/naotu2.png?raw=true)
 
+
+## 在node18运行：
+在 node V18 下运行，需要先执行命令：
+
+    $env:NODE_OPTIONS = "--openssl-legacy-provider"

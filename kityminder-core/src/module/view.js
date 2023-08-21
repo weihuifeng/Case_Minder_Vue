@@ -120,7 +120,13 @@ define(function(require, exports, module) {
                         e.originEvent.preventDefault(); // 阻止中键拉动
                     }
                     // 点击未选中的根节点临时开启
-                    if (e.getTargetNode() == this.getRoot() || e.originEvent.button == 2 || e.originEvent.altKey) {
+                    // if (e.getTargetNode() == this.getRoot() || e.originEvent.button == 2 || e.originEvent.altKey) {
+                    
+                    // wei: 改为左键拖动面板, 如果选中了节点，触发dragTree,不移动面板, 23.08.18
+                    if (e.getTargetNode() == this.getRoot() || e.originEvent.button == 0 || e.originEvent.altKey) {
+                        // window.console.log("now e is => ", e)
+                        if (e.minder._selectedNodes.length > 0) return;
+
                         lastPosition = e.getPosition('view');
                         isTempDrag = true;
                     }

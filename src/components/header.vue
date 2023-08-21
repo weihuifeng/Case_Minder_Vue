@@ -5,7 +5,9 @@
         <a href="javascritp:;" class="btn-showEditMenu" @click="showMenu">思维导图</a>
       </li>
       <li :class="{selected:switchShow.showViewMenu}">
-        <a href="javascritp:;" class="btn-showViewMenu" @click="showMenu">外观样式</a>
+        <!-- 去掉报错的 herf -->
+        <!-- <a href="javascritp:;" class="btn-showViewMenu" @click="showMenu">外观样式</a> -->
+        <a class="btn-showViewMenu" @click="showMenu">外观样式</a>
       </li>
     </ul>
     <div id="mind_tab-content">

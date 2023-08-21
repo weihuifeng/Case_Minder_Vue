@@ -1,8 +1,6 @@
 <template>
     <div class="caseDialogDiv">
-        <!-- Form -->
-        <!-- :key="+newDate()" 每次生成新对象不生效 -->
-        <!-- v-dialogDrag：实现拖拽 -->
+
         <el-dialog title="用例描述" v-if="caseDialogFormVisible" :visible.sync="caseDialogFormVisible" :modal="false"
             :close-on-click-modal="false" :destroy-on-close="true" v-dialogDrag @close="cancle">
 
@@ -29,19 +27,19 @@
 
                 <el-form-item label="前置步骤">
                     <!-- <p>前置步骤</p> -->
-                    <el-input type="textarea" :rows="6" placeholder="前置步骤" v-model="caseDetails.preStep" resize="none">
+                    <el-input type="textarea" :rows="6" placeholder="前置步骤" v-model="caseForm.caseDetails.preStep" resize="none">
                     </el-input>
                 </el-form-item>
 
                 <el-form-item label="用例步骤">
                     <!-- <p>用例步骤</p> -->
-                    <el-input type="textarea" :rows="6" placeholder="用例步骤" v-model="caseDetails.caseStep" resize="none">
+                    <el-input type="textarea" :rows="6" placeholder="用例步骤" v-model="caseForm.caseDetails.caseStep" resize="none">
                     </el-input>
                 </el-form-item>
 
                 <el-form-item label="预期结果">
                     <!-- <p>预期结果</p> -->
-                    <el-input type="textarea" :rows="6" placeholder="预期结果" v-model="caseDetails.postStep" resize="none">
+                    <el-input type="textarea" :rows="6" placeholder="预期结果" v-model="caseForm.caseDetails.postStep" resize="none">
                     </el-input>
                 </el-form-item>
 
@@ -61,9 +59,7 @@
 </template>
 
 <script>
-// 父子关系：editor-> mainEditor -> caseDialog---已调整为下面的父子关系
-//        editor-> headerMenu(header) ->  editMenu -> sequenceBox
-//                                                 ->  caseDialog
+// 父子关系：editor-> mainEditor -> caseDialog
 
 import {
     mapGetters,
@@ -79,7 +75,6 @@ export default {
     // 将showDialog方法挂载到windows对象,提供给外部
     mounted() {
         window.showCaseDialog = this.showCaseDialogVue;
-
     },
 
     data() {
@@ -95,12 +90,13 @@ export default {
                 caseTitle: '',
                 caseLevel: '',
                 caseTagInfo: '',
+                caseDetails: {
+                    preStep: '',
+                    caseStep: '',
+                    postStep: '',
+                },
             },
-            caseDetails:{
-                preStep: '',
-                caseStep: '',
-                postStep: '',
-            },
+
 
             //对话框状态
             diaglogFSM: {},
@@ -117,18 +113,23 @@ export default {
     },
     methods: {
         showCaseDialogVue(fsm) {
-            this.caseDialogFormVisible = true;
             //弹窗状态
             // console.log("caseDialog fsm  -> ", fsm)
             this.diaglogFSM = fsm;
 
-                    //初始化值
-            this.caseForm.caseTitle = this.originalTitle = this.minder.queryCommandValue('text') == '分支主题' ? "" : minder.queryCommandValue('text');
-            this.caseForm.caseLevel = this.originalLevel = this.minder.queryCommandValue('priority') == null ? "" : minder.queryCommandValue('priority') - 1;
-            this.caseForm.caseTagInfo = this.originalTag = this.minder.queryCommandValue('resource') == null ? "" : minder.queryCommandValue('resource');
             if (typeof(this.minder.queryCommandValue('case')) != "undefined"){
-                this.caseDetails = this.minder.queryCommandValue('case')
+                this.caseForm = this.minder.queryCommandValue('case')
+                this.originalTitle = this.caseForm.caseTitle;
+                this.originalLevel = this.caseForm.caseLevel;
+                this.originalTag = this.caseForm.caseTagInfo;
+            } else {
+                // 首次创建初始化值
+                this.caseForm.caseTitle = this.originalTitle = this.minder.queryCommandValue('text') == '分支主题' ? "" : minder.queryCommandValue('text');
+                this.caseForm.caseLevel = this.originalLevel = this.minder.queryCommandValue('priority') == null ? "" : minder.queryCommandValue('priority') - 1;
+                this.caseForm.caseTagInfo = this.originalTag = this.minder.queryCommandValue('resource') == null ? "" : minder.queryCommandValue('resource');
             }
+
+            this.caseDialogFormVisible = true;
 
             //自动聚焦到第一个输入框
             this.$nextTick(() => {
@@ -141,13 +142,13 @@ export default {
             this.caseDialogFormVisible = false;
             // console.log("now fsm -> ", this.diaglogFSM)
             this.diaglogFSM.jump('normal', 'dialogCancle');
-            this.cleanDate();
+            this.cleanData();
         },
 
         onSubmit() {
             // 将用例信息保存到脑图对应节点
             // console.log(JSON.stringify(this.caseDetails));
-            this.minder.execCommand('case', this.caseDetails);
+            this.minder.execCommand('case', this.caseForm);
 
             // console.log("提交用例")
             // console.log(minder.queryCommandValue('case'));
@@ -165,21 +166,20 @@ export default {
 
             this.caseDialogFormVisible = false;
             this.diaglogFSM.jump('normal', 'dialogCommit');
-            this.cleanDate();
+            this.cleanData();
         },
 
-        cleanDate() {
+        cleanData() {
             this.caseForm = {
                 caseTitle: '',
                 caseLevel: '',
                 caseTagInfo: '',
+                caseDetails: {
+                    preStep: '',
+                    caseStep: '',
+                    postStep: '',
+                }
             };
-            this.caseDetails={
-                preStep: '',
-                caseStep: '',
-                postStep: '',
-            }
-
         },
 
         // 将用例等级变更消息同步给sequenceBox

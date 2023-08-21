@@ -18,14 +18,12 @@
     <!--  自定义标签-->
     <resource-edit></resource-edit>
 
-    <!-- <case-tag></case-tag> -->
-    <case-dialog></case-dialog>
-
     <div>
       <el-button
       class="commitBtn"
       type="primary"
       :loading="isLoading"
+      @click="onSubmit"
       >
       保存<i class="el-icon-upload el-icon--right"></i></el-button>
     </div>
@@ -45,7 +43,6 @@ import resourceEdit from "./resourceEdit";
 import Search from "./search/search";
 import hyberlink from "./hyberlink";
 import backAndRight from "./backAndRight";
-import caseDialog from '@/components/menu/edit/caseDialog'
 
 
 export default {
@@ -63,14 +60,17 @@ export default {
     resourceEdit,
     hyberlink,
     backAndRight,
-    // caseTag,
-    caseDialog
   },
   data(){
     return{
       isLoading: false,
     }
   },
+  methods: {
+    onSubmit(){
+      
+    }
+  }
 }
 </script>
 

@@ -70,7 +70,7 @@ export default {
         return resource.name;
       });
       if (!!currentVal && resource.indexOf(currentVal) === -1) {
-        //**************源码没有去重，没有及时刷新标签无用的情况
+        //**************没有及时刷新标签无用的情况
         this.sourceData.push({
           name: currentVal,
           selected: true,
